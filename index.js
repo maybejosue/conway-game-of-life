@@ -1,6 +1,8 @@
 const canvasSize = 500;
 const cellsInRow = 25;
-const gameSpeed = 5;
+const gameSpeed = document.getElementById("speed");
+
+var startGame = false;
 
 // Initializes grid with random cell state (i.e. dead or alive)
 const initialize = () => {
@@ -19,7 +21,7 @@ const initialize = () => {
   return grid;
 };
 
-// Initializes grid with random cell state (i.e. dead or alive)
+// Initializes next generation grid based on game of life rules refrences initialized grid
 const nextGeneration = (grid) => {
   // new grid based on initialized grid
   const nextGrid = new Array(grid.length);
@@ -71,13 +73,14 @@ const cellSize = canvasSize / cellsInRow;
 
 const makeGrid = (context, grid) => {
   context.strokeStyle = gridColor;
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid.length; j++) {
-      const value = grid[i][j];
+  for (let x = 0; x < grid.length; x++) {
+    for (let y = 0; y < grid.length; y++) {
+      const value = grid[x][y];
+      // if cell is alive turn cell black else leave clear color (i.e. white)
       if (value) {
-        context.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+        context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
-      context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+      context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
 };
@@ -87,14 +90,40 @@ const generation = (context, grid) => {
   context.clearRect(0, 0, canvasSize, canvasSize);
   makeGrid(context, grid);
   const gridOfNextGeneration = nextGeneration(grid);
-  setTimeout(() => {
-    requestAnimationFrame(() => generation(context, gridOfNextGeneration));
-  }, 1000 / gameSpeed);
+  if (startGame) {
+    setTimeout(() => {
+      requestAnimationFrame(() => generation(context, gridOfNextGeneration));
+    }, 1000 / gameSpeed);
+  }
 };
 
+var grid, canvas, context;
+
 window.onload = () => {
-  const canvas = document.getElementById("canvas");
-  const context = canvas.getContext("2d");
-  const grid = initialize();
+  grid = initialize();
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
   generation(context, grid);
 };
+
+function click(idName, func) {
+  document.getElementById(idName).onclick = func;
+}
+
+function fetchClass(classN) {
+  document.getElementsByName(classN);
+}
+
+click("start", start);
+click("stop", stop);
+
+function start() {
+  startGame = true;
+  generation(context, grid);
+}
+
+function stop() {
+  startGame = false;
+}
+
+const shuffle = () => {};

@@ -2,17 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>R.I.P John Conway</title>
   </head>
   <body>
+    <h1>Conway game of life build</h1>
     <p class="generations"></p>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
+    <p>speed</p>
+    <input class="speed" type="range" min="1" max="10" value="5" />
     <style>
       #canvas {
         display: block;
         margin: 0 auto;
       }
     </style>
-    <canvas id="canvas" height="500px" width="500px"></canvas>
-    <script src="index.js"></script>
   </body>
+  <canvas id="canvas" height="500px" width="500px"></canvas>
+  <script src="index.js"></script>
 </html>
