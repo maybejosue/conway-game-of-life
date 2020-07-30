@@ -1,8 +1,21 @@
 const canvasSize = 500;
 const cellsInRow = 25;
-const gameSpeed = document.getElementById("speed");
-
+``;
+var gameSpeed = speed();
 var startGame = false;
+var fbf = false;
+var generationCount = 0;
+
+function speed() {
+  let range = document.getElementById("speed");
+  gameSpeed = range.value;
+}
+
+function deadOrAlive() {
+  if (!startGame) {
+    console.log("click");
+  }
+}
 
 // Initializes grid with random cell state (i.e. dead or alive)
 const initialize = () => {
@@ -21,8 +34,31 @@ const initialize = () => {
   return grid;
 };
 
+function randomize() {
+  for (let x = 0; x < grid.length; x++) {
+    // loop thru the rows inside the main grid and input random state
+    for (let y = 0; y < grid.length; y++) {
+      grid[x][y] = Math.floor(Math.random() * 2);
+    }
+  }
+  generation(context, grid);
+  generationCount = 0;
+}
+
+const clearGrid = () => {
+  for (let x = 0; x < grid.length; x++) {
+    // loop thru the rows inside the main grid and input random state
+    for (let y = 0; y < grid.length; y++) {
+      grid[x][y] = 0;
+    }
+  }
+  generation(context, grid);
+  generationCount = 0;
+};
+
 // Initializes next generation grid based on game of life rules refrences initialized grid
 const nextGeneration = (grid) => {
+  gen();
   // new grid based on initialized grid
   const nextGrid = new Array(grid.length);
 
@@ -76,6 +112,7 @@ const makeGrid = (context, grid) => {
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid.length; y++) {
       const value = grid[x][y];
+
       // if cell is alive turn cell black else leave clear color (i.e. white)
       if (value) {
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -98,32 +135,51 @@ const generation = (context, grid) => {
 };
 
 var grid, canvas, context;
+grid = initialize();
 
 window.onload = () => {
-  grid = initialize();
   canvas = document.getElementById("canvas");
   context = canvas.getContext("2d");
   generation(context, grid);
 };
 
+// const trial = document.querySelectorAll("#btn");
+// trial.forEach((row) => {
+//   row.addEventListener("click", handleClick);
+// });
+
+// function handleClick() {
+//   console.log("clicked");
+// }
+
 function click(idName, func) {
   document.getElementById(idName).onclick = func;
 }
 
-function fetchClass(classN) {
-  document.getElementsByName(classN);
+function fetchId(classN) {
+  return document.getElementById(classN);
 }
 
 click("start", start);
 click("stop", stop);
+click("clear", clearGrid);
+click("randomize", randomize);
 
 function start() {
+  speed();
   startGame = true;
   generation(context, grid);
 }
 
 function stop() {
   startGame = false;
+  generationCount = 0;
 }
 
 const shuffle = () => {};
+
+function gen() {
+  generationCount += 1;
+  const displayGenCount = fetchId("gen-count");
+  displayGenCount.innerHTML = "generation: " + generationCount;
+}

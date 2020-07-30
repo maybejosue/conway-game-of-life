@@ -6,18 +6,35 @@
   </head>
   <body>
     <h1>Conway game of life build</h1>
-    <p class="generations"></p>
+    <p id="gen-count"></p>
     <button id="start">start</button>
     <button id="stop">stop</button>
-    <p>speed</p>
-    <input class="speed" type="range" min="1" max="10" value="5" />
+    <button id="clear">clear</button>
+    <button id="randomize">randomize</button>
+    <input id="speed" type="range" min="1" max="10" value="5" />
+    <label for="speed">Speed</label>
+
     <style>
       #canvas {
         display: block;
         margin: 0 auto;
       }
     </style>
+
+    <h2>Rules:</h2>
+    <p>
+      If the cell is alive and has 2 or 3 neighbors, then it remains alive. Else
+      it dies.<br />
+      If the cell is dead and has exactly 3 neighbors, then it comes to life.
+      Else if remains dead.
+    </p>
   </body>
-  <canvas id="canvas" height="500px" width="500px"></canvas>
+  <canvas id="canvas" height="500px" width="500px">
+    <button id="btn" style="color: geen;">can you even hear me you guy</button>
+    <button id="btn"></button>
+    <button id="btn"></button>
+    <button id="btn"></button>
+    <button id="btn"></button>
+  </canvas>
   <script src="index.js"></script>
 </html>
