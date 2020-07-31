@@ -58,16 +58,16 @@ const Game = () => {
             let countNeighbors = 0;
 
             operations.forEach(([x, y]) => {
-              const newI = i + x;
-              const newJ = j + y;
+              const r = i + x;
+              const c = j + y;
 
               if (
-                newI >= 0 &&
-                newI < rowBaseRef.current &&
-                newJ >= 0 &&
-                newJ < columnBaseRef.current
+                r >= 0 &&
+                r < rowBaseRef.current &&
+                c >= 0 &&
+                c < columnBaseRef.current
               ) {
-                countNeighbors += lastGen[newI][newJ];
+                countNeighbors += lastGen[r][c];
               }
             });
 
@@ -145,6 +145,7 @@ const Game = () => {
           >
             Randomize
           </button>
+          <input type="range" min="1000" max="500" value="750" />
           <button
             onClick={() => {
               setGrid(clearGrid(rowBase, columnBase));
