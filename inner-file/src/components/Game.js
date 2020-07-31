@@ -86,49 +86,7 @@ const Game = () => {
     }, 100);
   }, []);
   return (
-    <div className="game">
-      <div className="gameButtons">
-        <div style={{ fontSize: 15 }}>{`Generation: ${generation}`}</div>
-        <button
-          onClick={() => {
-            setRunning(!running);
-            if (!running) {
-              runningRef.current = true;
-              runSimulation();
-            }
-          }}
-        >
-          {running ? "Stop Game" : "Start Game"}
-        </button>
-        <button
-          onClick={() => {
-            const rows = [];
-            for (let i = 0; i < rowBase; i++) {
-              rows.push(
-                Array.from(Array(columnBase), () =>
-                  Math.random() > 0.7 ? 1 : 0
-                )
-              );
-            }
-
-            setGrid(rows);
-          }}
-        >
-          Randomize
-        </button>
-        <button
-          onClick={() => {
-            setGrid(clearGrid(rowBase, columnBase));
-            setGeneration(0);
-          }}
-        >
-          Clear Grid
-        </button>
-        <p>Custom Grid Size</p>
-        <button onClick={() => customGridSize(15)}>15x15</button>
-        <button onClick={() => customGridSize(25)}>Default (25x25)</button>
-        <button onClick={() => customGridSize(30)}>30x30</button>
-      </div>
+    <div className="game" style={{ marginLeft: "30%" }}>
       <div
         style={{
           display: "grid",
@@ -156,6 +114,52 @@ const Game = () => {
             />
           ))
         )}
+      </div>
+      <div className="gameButtons" style={{ display: "flex" }}>
+        <div>
+          <div style={{ fontSize: 15 }}>{`Generation: ${generation}`}</div>
+          <button
+            onClick={() => {
+              setRunning(!running);
+              if (!running) {
+                runningRef.current = true;
+                runSimulation();
+              }
+            }}
+          >
+            {running ? "Stop Game" : "Start Game"}
+          </button>
+          <button
+            onClick={() => {
+              const rows = [];
+              for (let i = 0; i < rowBase; i++) {
+                rows.push(
+                  Array.from(Array(columnBase), () =>
+                    Math.random() > 0.7 ? 1 : 0
+                  )
+                );
+              }
+
+              setGrid(rows);
+            }}
+          >
+            Randomize
+          </button>
+          <button
+            onClick={() => {
+              setGrid(clearGrid(rowBase, columnBase));
+              setGeneration(0);
+            }}
+          >
+            Clear Grid
+          </button>
+        </div>
+        <div>
+          <p style={{ fontSize: 15 }}>Custom Grid Size</p>
+          <button onClick={() => customGridSize(15)}>15x15</button>
+          <button onClick={() => customGridSize(25)}>Default (25x25)</button>
+          <button onClick={() => customGridSize(30)}>30x30</button>
+        </div>
       </div>
     </div>
   );
